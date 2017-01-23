@@ -6,3 +6,10 @@
   tags:
     - archiva
     - install
+
+- name: Create Archiva admin automatically
+  include: create-admin.yml
+  tags:
+    - archiva
+    - configure
+  when: archiva_admin_password is defined and archiva_admin_email is defined

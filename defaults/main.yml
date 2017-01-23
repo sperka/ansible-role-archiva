@@ -22,3 +22,4 @@ archiva:
     install_path: /opt/
     install_name: apache-archiva
 
+    createAdminUserEndpoint: restServices/redbackServices/userService/createAdminUser

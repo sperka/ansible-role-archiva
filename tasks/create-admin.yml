@@ -1,0 +1,10 @@
+---
+
+- name: Create admin user
+  uri:
+    url: "http://{{ ansible_host }}:8080/{{ archiva.createAdminUserEndpoint }}"
+    method: POST
+    return_content: yes
+    HEADER_Content-Type: "application/json"
+    body_format: json
+    body: "{{ lookup('template', 'createAdminUser.json.j2') }}"
