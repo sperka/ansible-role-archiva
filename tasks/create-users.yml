@@ -1,0 +1,20 @@
+---
+
+- name: Login with admin user
+  uri:
+    url: "http://{{ ansible_host }}:8080/{{ archiva.loginEndpoint }}"
+    method: POST
+    body: "{{ lookup('template', 'loginRequest.xml.j2') }}"
+    HEADER_Content-Type: "application/xml"
+  register: login
+
+- name: Create users
+  uri:
+    url: "http://{{ ansible_host }}:8080/{{ archiva.createUserEndpoint }}"
+    method: POST
+    return_content: yes
+    HEADER_Cookie: "{{ login.set_cookie }}"
+    HEADER_Content-Type: "application/json"
+    body_format: json
+    body: "{{ lookup('template', 'createUser.json.j2', static_vars=[item]) }}"
+  with_items: archiva_users

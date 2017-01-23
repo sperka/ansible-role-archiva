@@ -23,3 +23,5 @@ archiva:
     install_name: apache-archiva
 
     createAdminUserEndpoint: restServices/redbackServices/userService/createAdminUser
+    createUserEndpoint: restServices/redbackServices/userService/createUser
+    loginEndpoint: restServices/redbackServices/loginService/logIn
