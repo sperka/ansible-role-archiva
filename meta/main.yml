@@ -1,0 +1,64 @@
+galaxy_info:
+  author: sperka
+  description: Ansible role to install Apache Archiva
+  license: MIT
+  min_ansible_version: 2.2
+
+  platforms:
+  # - name: MacOSX
+  #  versions:
+  #  - all
+  #  - 10.10
+  #  - 10.11
+  #  - 10.12
+  #  - 10.7
+  #  - 10.8
+  #  - 10.9
+  - name: Ubuntu
+   versions:
+   - all
+   - lucid
+   - maverick
+   - natty
+   - oneiric
+   - precise
+   - quantal
+   - raring
+   - saucy
+   - trusty
+   - utopic
+   - vivid
+   - wily
+   - xenial
+   - yakkety
+  #- name: Debian
+  #  versions:
+  #  - all
+  #  - etch
+  #  - jessie
+  #  - lenny
+  #  - sid
+  #  - squeeze
+  #  - stretch
+  #  - wheezy
+  # - name: Windows
+  #  versions:
+  #  - all
+  #  - 2012R2
+  #- name: Solaris
+  #  versions:
+  #  - all
+  #  - 10
+  #  - 11.0
+  #  - 11.1
+  #  - 11.2
+  #  - 11.3
+
+  galaxy_tags:
+    - "archiva"
+    - "maven"
+    - "maven repository"
+
+dependencies:
+    - src: gantsign.java
+      java_version: "{{ java_version }}"

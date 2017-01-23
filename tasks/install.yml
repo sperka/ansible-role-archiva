@@ -1,0 +1,74 @@
+---
+
+- name: Download url
+  set_fact:
+    archiva_download_url: {{ lookup('template', 'download_url.j2') }}
+
+- name: Download Archiva binary
+  get_url:
+    url: "{{ archiva_download_url }}"
+    dest: "{{ ansible_env.HOME }}/archiva.zip"
+
+- name: Make sure 'unzip' is installed
+  package:
+    name: unzip
+    state: latest
+
+- name: Extract archiva.zip
+  unarchive:
+    src: "{{ ansible_env.HOME }}/archiva.zip"
+    dest: "{{ archiva.install_path }}"
+    creates: "{{ archiva.install_name }}"
+    remote_src: yes
+
+- name: Remove downloaded .zip
+  file:
+    path: "{{ ansible_env.HOME }}/archiva.zip"
+    state: absent
+
+- name: Create symbolic link
+  file:
+    src: "{{ archiva.install_path }}/{{ archiva.install_name }}/bin/archiva"
+    dest: /etc/init.d/archiva
+    state: link
+
+# this needs to be done otherwise task doesn't see "JAVA_HOME" by itself
+- name: JAVA_HOME hack
+  become: yes
+  shell: . /etc/profile.d/java.sh && echo $JAVA_HOME
+  register: java_home_val
+
+- set_fact:
+    JAVA_HOME: {{ java_home_val.stdout }}
+    JAVA_BIN_PATH: {{ JAVA_HOME }}/bin
+
+# - debug: var=java_home_val
+
+- name: Set JAVA_HOME environment variable system-wide
+  become: yes
+  lineinfile:
+    dest: /etc/environment
+    line: "JAVA_HOME={{ JAVA_HOME }}"
+    state: present
+
+- name: Add JAVA_BIN_PATH to PATH
+  become: yes
+  lineinfile: >
+    dest=/etc/environment
+    state=present
+    backrefs=yes
+    regexp='PATH=(["]*)((?!.*?{{ JAVA_BIN_PATH }}).*?)(["]*)$'
+    line="PATH=\1\2:{{ JAVA_BIN_PATH }}\3"
+
+# has to be updated to the full path otherwise sometimes it doesn't start up
+- name: Archiva wrapper config update
+  replace:
+    dest: "{{ archiva.install_path }}/{{ archiva.install_name }}/conf/wrapper.conf"
+    regexp: 'wrapper\.java\.command=java'
+    replace: 'wrapper.java.command={{ java_home_val.stdout }}/bin/java'
+
+- name: Register service and start
+  service:
+    name: archiva
+    state: running
+    enabled: yes
