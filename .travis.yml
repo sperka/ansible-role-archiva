@@ -23,17 +23,17 @@ install:
 
 script:
   # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  - ansible-playbook tests/travis-test.yml -i tests/travis-inventory --syntax-check
 
   # Run the role/playbook with ansible-playbook.
-  - ansible-playbook tests/test.yml -i tests/inventory --connection=local
+  - ansible-playbook tests/travis-test.yml -i tests/travis-inventory --connection=local
 
   # Travis CI's environment requires one _extra_ run for true idempotence :-/.
-  - ansible-playbook tests/test.yml -i tests/inventory --connection=local
+  - ansible-playbook tests/travis-test.yml -i tests/travis-inventory --connection=local
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
-    ansible-playbook tests/test.yml -i tests/inventory --connection=local
+    ansible-playbook tests/travis-test.yml -i tests/travis-inventory --connection=local
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
