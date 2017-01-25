@@ -28,7 +28,7 @@
 
 - name: Create symbolic link
   file:
-    src: "{{ archiva.install_path }}/{{ archiva.install_name }}/bin/archiva"
+    src: "{{ archiva.install_path }}/{{ archiva.install_name }}-{{ archiva.version }}/bin/archiva"
     dest: /etc/init.d/archiva
     state: link
 
