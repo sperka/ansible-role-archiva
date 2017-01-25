@@ -21,10 +21,10 @@
     creates: "{{ archiva.install_name }}"
     remote_src: yes
 
-- name: Remove downloaded .zip
-  file:
-    path: "{{ ansible_env.HOME }}/archiva.zip"
-    state: absent
+# - name: Remove downloaded .zip
+#   file:
+#     path: "{{ ansible_env.HOME }}/archiva.zip"
+#     state: absent
 
 - name: Create symbolic link
   file:
@@ -40,6 +40,8 @@
 
 - set_fact:
     JAVA_HOME: "{{ java_home_val.stdout }}"
+
+- set_fact:
     JAVA_BIN_PATH: "{{ JAVA_HOME }}/bin"
 
 # - debug: var=java_home_val
@@ -63,7 +65,7 @@
 # has to be updated to the full path otherwise sometimes it doesn't start up
 - name: Archiva wrapper config update
   replace:
-    dest: "{{ archiva.install_path }}/{{ archiva.install_name }}/conf/wrapper.conf"
+    dest: "{{ archiva.install_path }}/{{ archiva.install_name }}-{{ archiva.version }}/conf/wrapper.conf"
     regexp: 'wrapper\.java\.command=java'
     replace: 'wrapper.java.command={{ java_home_val.stdout }}/bin/java'
 

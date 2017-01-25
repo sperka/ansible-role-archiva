@@ -6,6 +6,7 @@
   tags:
     - archiva
     - install
+  when: not onlyconfig 
 
 - name: Create Archiva admin automatically
   include: create-admin.yml

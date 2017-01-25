@@ -7,10 +7,10 @@ Vagrant.configure("2") do |config|
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  # config.vm.network "public_network"
+  config.vm.network "private_network", ip: "10.0.1.19"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "ansible-role-archiva.dev"
+    vb.name = "archiva"
     vb.memory = "1024"
     vb.cpus = 2
   end

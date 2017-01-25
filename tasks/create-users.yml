@@ -16,5 +16,5 @@
     HEADER_Cookie: "{{ login.set_cookie }}"
     HEADER_Content-Type: "application/json"
     body_format: json
-    body: "{{ lookup('template', 'createUser.json.j2', static_vars=[item]) }}"
+    body: "{{ lookup('template', 'createUser.json.j2') }}"
   with_items: archiva_users
