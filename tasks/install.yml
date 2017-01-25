@@ -2,7 +2,7 @@
 
 - name: Download url
   set_fact:
-    archiva_download_url: {{ lookup('template', 'download_url.j2') }}
+    archiva_download_url: "{{ lookup('template', 'download_url.j2') }}"
 
 - name: Download Archiva binary
   get_url:
@@ -39,8 +39,8 @@
   register: java_home_val
 
 - set_fact:
-    JAVA_HOME: {{ java_home_val.stdout }}
-    JAVA_BIN_PATH: {{ JAVA_HOME }}/bin
+    JAVA_HOME: "{{ java_home_val.stdout }}"
+    JAVA_BIN_PATH: "{{ JAVA_HOME }}/bin"
 
 # - debug: var=java_home_val
 

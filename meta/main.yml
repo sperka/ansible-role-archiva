@@ -14,23 +14,23 @@ galaxy_info:
   #  - 10.7
   #  - 10.8
   #  - 10.9
-  - name: Ubuntu
-   versions:
-   - all
-   - lucid
-   - maverick
-   - natty
-   - oneiric
-   - precise
-   - quantal
-   - raring
-   - saucy
-   - trusty
-   - utopic
-   - vivid
-   - wily
-   - xenial
-   - yakkety
+    - name: Ubuntu
+      versions:
+        - all
+        - lucid
+        - maverick
+        - natty
+        - oneiric
+        - precise
+        - quantal
+        - raring
+        - saucy
+        - trusty
+        - utopic
+        - vivid
+        - wily
+        - xenial
+        - yakkety
   #- name: Debian
   #  versions:
   #  - all
@@ -61,4 +61,3 @@ galaxy_info:
 
 dependencies:
     - src: gantsign.java
-      java_version: "{{ java_version }}"

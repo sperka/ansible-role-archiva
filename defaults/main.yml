@@ -19,7 +19,7 @@ archiva:
     # {{ dl_base_url }}/{{ version }}/binaries/apache-archiva-{{ version }}-bin.zip
     download_base_url: http://mirror.reverse.net/pub/apache/archiva/
 
-    install_path: /opt/
+    install_path: /opt
     install_name: apache-archiva
 
     createAdminUserEndpoint: restServices/redbackServices/userService/createAdminUser

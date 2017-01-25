@@ -2,23 +2,22 @@
 
 # Example playbook for ansible-role-archiva
 
-- hosts: servers
+- hosts: all
+  become: yes
   roles:
-     - {
-        role: sperka.archiva,
-        archiva_admin_email: admin@archiva-test.org,
-        archiva_admin_password: adminPass123,
-        archiva_users:
-            - username: deploy
-              password: deployPass123
-              email: deploy@archiva-test.org
-              fullName: Deploy User
-              roles:
-                - "Global Repository Manager"
-                - "Global Repository Observer"
-                - "Registered User"
-                - "Repository Manager - internal"
-                - "Repository Observer - internal"
-                - "Repository Observer - snapshots"
-                - "Repository Manager - snapshots"
-      }
+    - role: ansible-role-archiva
+      archiva_admin_email: admin@archiva-test.org
+      archiva_admin_password: adminPass123
+      archiva_users:
+        - username: deploy
+          password: deployPass123
+          email: deploy@archiva-test.org
+          fullName: Deploy User
+          roles:
+            - "Global Repository Manager"
+            - "Global Repository Observer"
+            - "Registered User"
+            - "Repository Manager - internal"
+            - "Repository Observer - internal"
+            - "Repository Observer - snapshots"
+            - "Repository Manager - snapshots"
