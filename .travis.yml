@@ -2,8 +2,7 @@
 language: python
 python: "2.7"
 
-# Use the new container infrastructure
-sudo: false
+sudo: required
 
 # Install ansible
 addons:
@@ -18,8 +17,13 @@ install:
   # Check ansible version
   - ansible --version
 
+  # install dependencies
+  - ansible-galaxy install -r tests/requirements.yml -p tests/dependencies
+
   # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' >ansible.cfg
+  - printf '[defaults]\nhost_key_checking=False\nroles_path=../:tests/dependencies' >ansible.cfg
+
+
 
 script:
   # Basic role syntax check
@@ -27,13 +31,3 @@ script:
 
   # Run the role/playbook with ansible-playbook.
   - ansible-playbook tests/travis-test.yml -i tests/travis-inventory --connection=local
-
-  # Travis CI's environment requires one _extra_ run for true idempotence :-/.
-  - ansible-playbook tests/travis-test.yml -i tests/travis-inventory --connection=local
-
-  # Run the role/playbook again, checking to make sure it's idempotent.
-  - >
-    ansible-playbook tests/travis-test.yml -i tests/travis-inventory --connection=local
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
