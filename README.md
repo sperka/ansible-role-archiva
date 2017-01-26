@@ -118,7 +118,7 @@ and a `deploy` user with the proper roles assigned.
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
