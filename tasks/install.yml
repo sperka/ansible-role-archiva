@@ -67,7 +67,13 @@
   replace:
     dest: "{{ archiva.install_path }}/{{ archiva.install_name }}-{{ archiva.version }}/conf/wrapper.conf"
     regexp: 'wrapper\.java\.command=java'
-    replace: 'wrapper.java.command={{ java_home_val.stdout }}/bin/java'
+    replace: 'wrapper.java.command={{ JAVA_HOME }}/bin/java'
+
+- name: Set provided port
+  replace:
+    dest: "{{ archiva.install_path }}/{{ archiva.install_name }}-{{ archiva.version }}/conf/jetty.xml"
+    regexp: '<Set name="port"><SystemProperty name="jetty\.port" default="8080"/></Set>'
+    replace: '<Set name="port"><SystemProperty name="jetty.port" default="{{ archiva.port }}"/></Set>'
 
 - name: Register service and start
   service:

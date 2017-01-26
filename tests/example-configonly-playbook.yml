@@ -6,7 +6,7 @@
   become: yes
   roles:
     - role: ansible-role-archiva
-      onlyconfig: yes
+      configonly: yes
       archiva_admin_email: admin@archiva-test.org
       archiva_admin_password: adminPass123
       archiva_users:

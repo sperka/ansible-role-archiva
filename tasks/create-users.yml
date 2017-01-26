@@ -2,7 +2,7 @@
 
 - name: Login with admin user
   uri:
-    url: "http://{{ ansible_host }}:8080/{{ archiva.loginEndpoint }}"
+    url: "http://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.loginEndpoint }}"
     method: POST
     body: "{{ lookup('template', 'loginRequest.xml.j2') }}"
     HEADER_Content-Type: "application/xml"
@@ -10,7 +10,7 @@
 
 - name: Create users
   uri:
-    url: "http://{{ ansible_host }}:8080/{{ archiva.createUserEndpoint }}"
+    url: "http://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.createUserEndpoint }}"
     method: POST
     return_content: yes
     HEADER_Cookie: "{{ login.set_cookie }}"

@@ -2,7 +2,7 @@
 
 - name: Create admin user
   uri:
-    url: "http://{{ ansible_host }}:8080/{{ archiva.createAdminUserEndpoint }}"
+    url: "http://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.createAdminUserEndpoint }}"
     method: POST
     return_content: yes
     HEADER_Content-Type: "application/json"
