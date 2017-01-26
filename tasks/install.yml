@@ -73,3 +73,10 @@
     name: archiva
     state: running
     enabled: yes
+
+- name: Wait untils Archiva web API is available
+  shell: curl --head --silent http://{{ ansible_host }}:{{ archiva.port }}/
+  register: result
+  until: result.stdout.find("200 OK") != -1
+  retries: 10
+  delay: 3
