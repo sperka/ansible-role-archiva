@@ -7,4 +7,4 @@
     return_content: yes
     HEADER_Content-Type: "application/json"
     body_format: json
-    body: "{{ lookup('template', 'createAdminUser.json.j2') }}"
+    body: "{{ archiva_admin | combine({ 'confirmPassword': archiva_admin.password }) | to_json }}"

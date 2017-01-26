@@ -13,11 +13,11 @@
   tags:
     - archiva
     - configure
-  when: archiva_admin_password is defined and archiva_admin_email is defined
+  when: archiva_admin is defined
 
 - name: Create Archiva users
   include: create-users.yml
   tags:
     - archiva
     - configure
-  when: archiva_admin_password is defined and archiva_users is defined
+  when: archiva_admin is defined and archiva_users is defined

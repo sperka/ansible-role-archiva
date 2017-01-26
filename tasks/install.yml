@@ -2,7 +2,7 @@
 
 - name: Download url
   set_fact:
-    archiva_download_url: "{{ lookup('template', 'download_url.j2') }}"
+    archiva_download_url: "{{ archiva.download_base_url }}/{{ archiva.version }}/binaries/apache-archiva-{{ archiva.version }}-bin.zip"
 
 - name: Download Archiva binary
   get_url:
@@ -21,11 +21,6 @@
     creates: "{{ archiva.install_name }}"
     remote_src: yes
 
-# - name: Remove downloaded .zip
-#   file:
-#     path: "{{ ansible_env.HOME }}/archiva.zip"
-#     state: absent
-
 - name: Create symbolic link
   file:
     src: "{{ archiva.install_path }}/{{ archiva.install_name }}-{{ archiva.version }}/bin/archiva"
@@ -43,8 +38,6 @@
 
 - set_fact:
     JAVA_BIN_PATH: "{{ JAVA_HOME }}/bin"
-
-# - debug: var=java_home_val
 
 - name: Set JAVA_HOME environment variable system-wide
   become: yes

@@ -6,18 +6,31 @@
   become: yes
   roles:
     - role: ansible-role-archiva
-      archiva_admin_email: admin@archiva-test.org
-      archiva_admin_password: adminPass123
+      archiva_admin:
+        username: admin
+        password: adminPass123
+        email: admin@archiva-test.org
+        fullName: Admin
+        locked: false
+        passwordChangeRequired: false
+        permanent: false
+        readOnly: false
+        validated: true
       archiva_users:
-        - username: deploy
-          password: deployPass123
-          email: deploy@archiva-test.org
-          fullName: Deploy User
-          roles:
-            - "Global Repository Manager"
-            - "Global Repository Observer"
-            - "Registered User"
-            - "Repository Manager - internal"
-            - "Repository Observer - internal"
-            - "Repository Observer - snapshots"
-            - "Repository Manager - snapshots"
+      - username: deploy
+        password: deployPass123
+        email: deploy@archiva-test.org
+        fullName: Deploy User
+        locked: false
+        passwordChangeRequired: false
+        permanent: false
+        readOnly: false
+        validated: true
+        assignedRoles:
+          - "Global Repository Manager"
+          - "Global Repository Observer"
+          - "Registered User"
+          - "Repository Manager - internal"
+          - "Repository Observer - internal"
+          - "Repository Observer - snapshots"
+          - "Repository Manager - snapshots"

@@ -4,8 +4,8 @@
   uri:
     url: "http://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.loginEndpoint }}"
     method: POST
-    body: "{{ lookup('template', 'loginRequest.xml.j2') }}"
-    HEADER_Content-Type: "application/xml"
+    body: '{{ { "username": "admin", "password": archiva_admin.password } | to_json }}'
+    HEADER_Content-Type: "application/json"
   register: login
 
 - name: Create users
@@ -16,5 +16,5 @@
     HEADER_Cookie: "{{ login.set_cookie }}"
     HEADER_Content-Type: "application/json"
     body_format: json
-    body: "{{ lookup('template', 'createUser.json.j2') }}"
-  with_items: archiva_users
+    body: "{{ item | combine({'confirmPassword': item.password}) | to_json }}"
+  with_items: "{{ archiva_users }}"
