@@ -18,12 +18,11 @@
   unarchive:
     src: "{{ ansible_env.HOME }}/archiva.zip"
     dest: "{{ archiva.install_path }}"
-    creates: "{{ archiva.install_name }}"
     remote_src: yes
 
 - name: Create symbolic link
   file:
-    src: "{{ archiva.install_path }}/{{ archiva.install_name }}-{{ archiva.version }}/bin/archiva"
+    src: "{{ archiva.install_path }}/apache-archiva-{{ archiva.version }}/bin/archiva"
     dest: /etc/init.d/archiva
     state: link
 
@@ -58,13 +57,13 @@
 # has to be updated to the full path otherwise sometimes it doesn't start up
 - name: Archiva wrapper config update
   replace:
-    dest: "{{ archiva.install_path }}/{{ archiva.install_name }}-{{ archiva.version }}/conf/wrapper.conf"
+    dest: "{{ archiva.install_path }}/apache-archiva-{{ archiva.version }}/conf/wrapper.conf"
     regexp: 'wrapper\.java\.command=java'
     replace: 'wrapper.java.command={{ JAVA_HOME }}/bin/java'
 
 - name: Set provided port
   replace:
-    dest: "{{ archiva.install_path }}/{{ archiva.install_name }}-{{ archiva.version }}/conf/jetty.xml"
+    dest: "{{ archiva.install_path }}/apache-archiva-{{ archiva.version }}/conf/jetty.xml"
     regexp: '<Set name="port"><SystemProperty name="jetty\.port" default="8080"/></Set>'
     replace: '<Set name="port"><SystemProperty name="jetty.port" default="{{ archiva.port }}"/></Set>'
 

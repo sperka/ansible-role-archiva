@@ -22,7 +22,6 @@ archiva:
     port: 8080
 
     install_path: /opt
-    install_name: apache-archiva
 
     createAdminUserEndpoint: restServices/redbackServices/userService/createAdminUser
     createUserEndpoint: restServices/redbackServices/userService/createUser
