@@ -1,4 +1,7 @@
-# run this script from the __ROOT__ of this role
+# run this script from the __ROOT__ path of this role
+# e.g.:
+# $> vagrant up
+# $> /bin/bash tests/vagrant-run-playbook.sh
 
 # create a temporary cfg
 echo "Create temporary ansible.cfg"

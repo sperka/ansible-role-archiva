@@ -18,3 +18,15 @@
     body_format: json
     body: "{{ item | combine({'confirmPassword': item.password}) | to_json }}"
   with_items: "{{ archiva_users }}"
+
+# there's a need to update so that roles are properly saved in archiva
+- name: Update user roles
+  uri:
+    url: "http://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.updateUserRolesEndpoint }}"
+    method: POST
+    return_content: yes
+    HEADER_Cookie: "{{ login.set_cookie }}"
+    HEADER_Content-Type: "application/json"
+    body_format: json
+    body: "{{ item | combine({'confirmPassword': item.password}) | to_json }}"
+  with_items: "{{ archiva_users }}"

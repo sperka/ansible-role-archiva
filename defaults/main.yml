@@ -26,4 +26,5 @@ archiva:
 
     createAdminUserEndpoint: restServices/redbackServices/userService/createAdminUser
     createUserEndpoint: restServices/redbackServices/userService/createUser
+    updateUserRolesEndpoint: restServices/redbackServices/roleManagementService/updateUserRoles
     loginEndpoint: restServices/redbackServices/loginService/logIn
