@@ -1,42 +1,63 @@
 Ansible Role: Apache Archiva
 ============================
 
+[![Build Status](https://travis-ci.org/sperka/ansible-role-archiva.svg?branch=master)](https://travis-ci.org/sperka/ansible-role-archiva)
+
 Installs [Apache Archiva](https://archiva.apache.org).
 
 Requirements
 ------------
 
+This role supports **only Ubuntu Linux**. Feel free to extend it to other platforms.
+
 Archiva [system requirements](https://archiva.apache.org/download.cgi):
 
-* **JDK**: 1.7 or above
-* **No minimum requirement**: The Archiva application is in itself about 50MB but will use more disk space to store repository contents
-* **Operating System**: Support for Linux, Mac OS, Solaris and Windows. Tested on Windows XP SP2, Ubuntu Linux, and Mac OS X.
-
-Currently this role supports only Ubuntu Linux. Feel free to extend it to other platforms.
+*   **JDK**: 1.7 or above
+*   **No minimum requirement**: The Archiva application is in itself about 50MB but will use more disk space to store repository contents
+*   **Operating System**: Support for Linux, Mac OS, Solaris and Windows. Tested on Windows XP SP2, Ubuntu Linux, and Mac OS X.
 
 Role Variables
 --------------
 
 #### Default variables:
 
-  *  `archiva.version` - Apache Archiva version (default is _2.2.1_)
-  *  `archiva.downloadbase_url` - The base url of the binary (_see_ `templates/download_url.j2`)
-  * `archiva.install_path` - Where to install Archiva
-  * `archiva.install_name` - Name of the installation folder
-  * `archiva.createAdminUserEndpoint` - REST endpoint to create admin user
-  * `archiva.createUserEndpoint` - REST endpoint to create a user
-  * `archiva.loginEndpoint` - REST endpoint to login with a user
+*   `archiva.version` - Apache Archiva version (default is _2.2.1_)
+*   `archiva.download_base_url` - The base url of the binary (_see_ `templates/download_url.j2`)
+*   `archiva.install_path` - Where to install Archiva
+*   `archiva.createAdminUserEndpoint` - REST endpoint to create admin user
+*   `archiva.createUserEndpoint` - REST endpoint to create a user
+*   `archiva.updateUserRolesEndpoint` - REST endpoint to update user's role
+*   `archiva.loginEndpoint` - REST endpoint to login with a user
 
 #### Playbook variables
 
-  * `archiva_admin_email` - Email address of the admin user
-  * `archiva_admin_password` - Password of the admin user
-  * `archiva_users` - List of users to create. Following fields are required per user:
-    * `username`
-    * `password`
-    * `email`
-    * `fullName`
-    * `roles` - List of strings of the roles. See `tests/example-playbook.yml`.
+For user the proper user parameters, please see [Apache Archiva Redback REST API](http://archiva.apache.org/docs/2.2.1/rest-docs-redback-rest-api/index.html).
+
+*   `configonly` - Indicates if you want to run this role only to configure users
+     (doesn't run the installer if this variable is set to `true`)
+*   `archiva_admin` - The object that describes the admin user
+    *   `username`
+    *   `password`
+    *   `email`
+    *   `fullName`
+    *   `locked`
+    *   `passwordChangeRequired`
+    *   `permanent`
+    *   `readOnly`
+    *   `validated`
+
+
+*   `archiva_users` - List of objects that describe users to create
+    *   `username`
+    *   `password`
+    *   `email`
+    *   `fullName`
+    *   `locked`
+    *   `passwordChangeRequired`
+    *   `permanent`
+    *   `readOnly`
+    *   `validated`
+    *   `assignedRoles` - List of strings of the roles. See `tests/example-playbook.yml`.
 
 
 Dependencies
@@ -64,21 +85,34 @@ and a `deploy` user with the proper roles assigned.
   become: yes
   roles:
     - role: ansible-role-archiva
-      archiva_admin_email: admin@archiva-test.org
-      archiva_admin_password: adminPass123
+      archiva_admin:
+        username: admin
+        password: adminPass123
+        email: admin@archiva-test.org
+        fullName: Admin
+        locked: false
+        passwordChangeRequired: false
+        permanent: false
+        readOnly: false
+        validated: true
       archiva_users:
-        - username: deploy
-          password: deployPass123
-          email: deploy@archiva-test.org
-          fullName: Deploy User
-          roles:
-            - "Global Repository Manager"
-            - "Global Repository Observer"
-            - "Registered User"
-            - "Repository Manager - internal"
-            - "Repository Observer - internal"
-            - "Repository Observer - snapshots"
-            - "Repository Manager - snapshots"
+      - username: deploy
+        password: deployPass123
+        email: deploy@archiva-test.org
+        fullName: Deploy User
+        locked: false
+        passwordChangeRequired: false
+        permanent: false
+        readOnly: false
+        validated: true
+        assignedRoles:
+          - "Global Repository Manager"
+          - "Global Repository Observer"
+          - "Registered User"
+          - "Repository Manager - internal"
+          - "Repository Observer - internal"
+          - "Repository Observer - snapshots"
+          - "Repository Manager - snapshots"
 ```
 
 License
@@ -89,4 +123,4 @@ BSD
 Author Information
 ------------------
 
-https://github.com/sperka
+[https://github.com/sperka](https://github.com/sperka)
