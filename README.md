@@ -31,7 +31,7 @@ Role Variables
 
 #### Playbook variables
 
-For user the proper user parameters, please see [Apache Archiva Redback REST API](http://archiva.apache.org/docs/2.2.1/rest-docs-redback-rest-api/index.html) and
+For use the proper user parameters, please see [Apache Archiva Redback REST API](http://archiva.apache.org/docs/2.2.1/rest-docs-redback-rest-api/index.html) and
 [Apache Archiva Web REST support API](http://archiva.apache.org/docs/2.2.1/rest-docs-archiva-rest-api/index.html).
 
 *   `configonly` - Indicates if you want to run this role only to configure users
