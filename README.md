@@ -31,7 +31,8 @@ Role Variables
 
 #### Playbook variables
 
-For user the proper user parameters, please see [Apache Archiva Redback REST API](http://archiva.apache.org/docs/2.2.1/rest-docs-redback-rest-api/index.html).
+For use the proper user parameters, please see [Apache Archiva Redback REST API](http://archiva.apache.org/docs/2.2.1/rest-docs-redback-rest-api/index.html) and
+[Apache Archiva Web REST support API](http://archiva.apache.org/docs/2.2.1/rest-docs-archiva-rest-api/index.html).
 
 *   `configonly` - Indicates if you want to run this role only to configure users
      (doesn't run the installer if this variable is set to `true`)
@@ -46,6 +47,25 @@ For user the proper user parameters, please see [Apache Archiva Redback REST API
     *   `readOnly`
     *   `validated`
 
+*   `archiva_repositories` - List of objects that describe managed repositories to create
+    *   `id`
+    *   `name`
+    *   `layout`
+    *   `indexDirectory`
+    *   `description`
+    *   `location`
+    *   `snapshots`
+    *   `releases`
+    *   `blockRedeployments`
+    *   `cronExpression`
+    *   `stagingRepository`
+    *   `scanned`
+    *   `daysOlder`
+    *   `retentionCount`
+    *   `deleteReleasedSnapshots`
+    *   `stageRepoNeeded`
+    *   `resetStats`
+    *   `skipPackedIndexCreation`
 
 *   `archiva_users` - List of objects that describe users to create
     *   `username`
@@ -95,6 +115,25 @@ and a `deploy` user with the proper roles assigned.
         permanent: false
         readOnly: false
         validated: true
+      archiva_repositories:
+      - id: myRepo
+        name: myRepo
+        layout: default
+        indexDirectory: ./myRepo/.indexer
+        description: null
+        location: ./repositories/myRepo
+        snapshots: false
+        releases: true
+        blockRedeployments: true
+        cronExpression: '0 0 * * * ?'
+        stagingRepository: null
+        scanned: true
+        daysOlder: 100
+        retentionCount: 2
+        deleteReleasedSnapshots: false
+        stageRepoNeeded: false
+        resetStats: false
+        skipPackedIndexCreation: false
       archiva_users:
       - username: deploy
         password: deployPass123

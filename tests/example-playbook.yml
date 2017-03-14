@@ -16,6 +16,25 @@
         permanent: false
         readOnly: false
         validated: true
+      archiva_repositories:
+      - id: myRepo
+        name: myRepo
+        layout: default
+        indexDirectory: ./myRepo/.indexer
+        description: null
+        location: ./repositories/myRepo
+        snapshots: false
+        releases: true
+        blockRedeployments: true
+        cronExpression: '0 0 * * * ?'
+        stagingRepository: null
+        scanned: true
+        daysOlder: 100
+        retentionCount: 2
+        deleteReleasedSnapshots: false
+        stageRepoNeeded: false
+        resetStats: false
+        skipPackedIndexCreation: false
       archiva_users:
       - username: deploy
         password: deployPass123

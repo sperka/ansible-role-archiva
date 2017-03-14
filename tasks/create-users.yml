@@ -2,7 +2,7 @@
 
 - name: Login with admin user
   uri:
-    url: "http://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.loginEndpoint }}"
+    url: "{{ archiva.protocol }}://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.loginEndpoint }}"
     method: POST
     body: '{{ { "username": "admin", "password": archiva_admin.password } | to_json }}'
     HEADER_Content-Type: "application/json"
@@ -10,7 +10,7 @@
 
 - name: Create users
   uri:
-    url: "http://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.createUserEndpoint }}"
+    url: "{{ archiva.protocol }}://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.createUserEndpoint }}"
     method: POST
     return_content: yes
     HEADER_Cookie: "{{ login.set_cookie }}"
@@ -22,7 +22,7 @@
 # there's a need to update so that roles are properly saved in archiva
 - name: Update user roles
   uri:
-    url: "http://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.updateUserRolesEndpoint }}"
+    url: "{{ archiva.protocol }}://{{ ansible_host }}:{{ archiva.port }}/{{ archiva.updateUserRolesEndpoint }}"
     method: POST
     return_content: yes
     HEADER_Cookie: "{{ login.set_cookie }}"
