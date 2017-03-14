@@ -19,11 +19,13 @@ archiva:
     # {{ dl_base_url }}/{{ version }}/binaries/apache-archiva-{{ version }}-bin.zip
     download_base_url: http://mirror.reverse.net/pub/apache/archiva/
 
+    protocol: http
     port: 8080
 
     install_path: /opt
 
     createAdminUserEndpoint: restServices/redbackServices/userService/createAdminUser
+    createManagedRepositoryEndpoint: restServices/archivaServices/managedRepositoriesService/addManagedRepository
     createUserEndpoint: restServices/redbackServices/userService/createUser
     updateUserRolesEndpoint: restServices/redbackServices/roleManagementService/updateUserRoles
     loginEndpoint: restServices/redbackServices/loginService/logIn

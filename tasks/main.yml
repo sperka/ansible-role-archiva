@@ -15,7 +15,14 @@
     - configure
   when: archiva_admin is defined
 
-- name: Create Archiva users
+- name: Create repositories
+  include: create-repository.yml
+  tags:
+    - archiva
+    - configure
+  when: archiva_admin is defined and archiva_repositories is defined
+
+- name: Create users
   include: create-users.yml
   tags:
     - archiva
