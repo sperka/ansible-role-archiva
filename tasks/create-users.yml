@@ -7,7 +7,6 @@
     body: '{{ { "username": "admin", "password": archiva_admin.password } | to_json }}'
     HEADER_Content-Type: "application/json"
   register: login
-  when: login is not defined
 
 - name: Create users
   uri:

@@ -17,3 +17,4 @@
     HEADER_Content-Type: "application/json"
     body: "{{ item | to_json }}"
   with_items: "{{ archiva_repositories }}"
+  ignore_errors: yes
