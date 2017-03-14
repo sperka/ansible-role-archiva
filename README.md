@@ -119,7 +119,7 @@ and a `deploy` user with the proper roles assigned.
       - id: myRepo
         name: myRepo
         layout: default
-        indexDirectory: ./repositories/myRepo/.indexer
+        indexDirectory: ./myRepo/.indexer
         description: null
         location: ./repositories/myRepo
         snapshots: false
