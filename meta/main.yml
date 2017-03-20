@@ -61,3 +61,4 @@ galaxy_info:
 
 dependencies:
     - src: gantsign.java
+      name: gantsign.java
