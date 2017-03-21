@@ -18,7 +18,8 @@
   unarchive:
     src: "{{ ansible_env.HOME }}/archiva.zip"
     dest: "{{ archiva.install_path }}"
-    remote_src: yes
+    # remote_src: yes
+    copy: no
 
 - name: Create symbolic link
   file:
