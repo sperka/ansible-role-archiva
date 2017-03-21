@@ -15,6 +15,7 @@
     state: latest
 
 - name: Extract archiva.zip
+  become: yes
   unarchive:
     src: "{{ ansible_env.HOME }}/archiva.zip"
     dest: "{{ archiva.install_path }}"
@@ -22,6 +23,7 @@
     copy: no
 
 - name: Create symbolic link
+  become: yes
   file:
     src: "{{ archiva.install_path }}/apache-archiva-{{ archiva.version }}/bin/archiva"
     dest: /etc/init.d/archiva
@@ -57,18 +59,21 @@
 
 # has to be updated to the full path otherwise sometimes it doesn't start up
 - name: Archiva wrapper config update
+  become: yes
   replace:
     dest: "{{ archiva.install_path }}/apache-archiva-{{ archiva.version }}/conf/wrapper.conf"
     regexp: 'wrapper\.java\.command=java'
     replace: 'wrapper.java.command={{ JAVA_HOME }}/bin/java'
 
 - name: Set provided port
+  become: yes
   replace:
     dest: "{{ archiva.install_path }}/apache-archiva-{{ archiva.version }}/conf/jetty.xml"
     regexp: '<Set name="port"><SystemProperty name="jetty\.port" default="8080"/></Set>'
     replace: '<Set name="port"><SystemProperty name="jetty.port" default="{{ archiva.port }}"/></Set>'
 
 - name: Register service and start
+  become: yes
   service:
     name: archiva
     state: running
@@ -78,5 +83,5 @@
   shell: curl --head --silent http://{{ ansible_host }}:{{ archiva.port }}/
   register: result
   until: result.stdout.find("200 OK") != -1
-  retries: 10
+  retries: 15
   delay: 3
