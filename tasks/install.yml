@@ -72,6 +72,14 @@
     regexp: '<Set name="port"><SystemProperty name="jetty\.port" default="8080"/></Set>'
     replace: '<Set name="port"><SystemProperty name="jetty.port" default="{{ archiva.port }}"/></Set>'
 
+- name: Set password expiration parameter
+  become: yes
+  replace:
+    dest: "{{ archiva.install_path }}/apache-archiva-{{ archiva.version }}/conf/archiva.xml"
+    regexp: '<expiration>\n<enabled>.*<\/enabled>'
+    replace: '<expiration>\n<enabled>{{ archiva.passwordExpirationEnabled }}</enabled>'
+  when: archiva.passwordExpirationEnabled is defined
+
 - name: Register service and start
   become: yes
   service:

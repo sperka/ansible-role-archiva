@@ -28,6 +28,7 @@ Role Variables
 *   `archiva.createUserEndpoint` - REST endpoint to create a user
 *   `archiva.updateUserRolesEndpoint` - REST endpoint to update user's role
 *   `archiva.loginEndpoint` - REST endpoint to login with a user
+*   `archiva.passwordExpirationEnabled` - Enable/disable password expiration for users (default: false)
 
 #### Playbook variables
 
