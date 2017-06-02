@@ -80,12 +80,11 @@
     replace: '<expiration>\n<enabled>{{ archiva.passwordExpirationEnabled }}</enabled>'
   when: archiva.passwordExpirationEnabled is defined
 
-- name: Register service and start
+- name: Start service
   become: yes
   service:
     name: archiva
     state: running
-    enabled: yes
 
 - name: Wait untils Archiva web API is available
   shell: curl --head --silent http://{{ ansible_host }}:{{ archiva.port }}/
@@ -93,3 +92,9 @@
   until: result.stdout.find("200 OK") != -1
   retries: 15
   delay: 3
+
+- name: Register service
+  become: yes
+  service:
+    name: archiva
+    enabled: yes
